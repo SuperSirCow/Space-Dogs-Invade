@@ -4,8 +4,19 @@
   </head>
   <body>
     <h1>Space Dawg</h1>
+    
+    <div>
+      <img src="https://purepng.com/public/uploads/large/purepng.com-doganimalsdogboy-981524673092o91pm.png" id = "boi" style="display:none;">
+    </div>
+    
     <canvas id="myCanvas" width=500px height=500px style="border:1px grey solid" ></canvas>
     <script>
+      window.onload = function() {
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("boi");
+        ctx.drawImage(img, 10, 10,50,60);
+      }
     </script>
   </body>
 </html>

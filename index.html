@@ -6,17 +6,98 @@
     <h1>Space Dawg</h1>
     
     <div>
+        
       <img src="https://purepng.com/public/uploads/large/purepng.com-doganimalsdogboy-981524673092o91pm.png" id = "boi" style="display:none;">
+      <img src="http://www.pngpix.com/wp-content/uploads/2016/08/PNGPIX-COM-Military-Tank-PNG-Transparent-Image-2-500x323.png" id ="boom" style="display:none;">
+        
     </div>
     
     <canvas id="myCanvas" width=500px height=500px style="border:1px grey solid" ></canvas>
     <script>
-      window.onload = function() {
+        
+        var tankX = 0;
+        
+        var bx = [];
+        var by = [];
+        
+        var idx = [];
+        var idy = [];
+        
+        var PosY = 0;
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
-        var img = document.getElementById("boi");
-        ctx.drawImage(img, 10, 10,50,60);
-      }
+        
+        // Keys detector
+        var keys = {};
+        window.onkeyup = function(e) {keys[e.keyCode] = false; }
+        window.onkeydown = function(e) {keys[e.keyCode] = true; }
+        
+        function createInvaders(a,r_) {
+            for (var i = 0; i < a; i++) {
+                idx.push((500/(a+1)+((500/(a+1))*i)));
+                idy.push(-60-(r_*(60+30)));
+            }
+        }
+     
+        function controls() {
+            if (keys[39]) {tankX+=3}
+            if (keys[37]) {tankX-=3}
+            if (keys[32]) {
+                bx.push(200+tankX+50);
+                by.push(300);
+            }
+            
+        }
+        
+        function drawBullets() {
+            // update
+            for (var i = 0; i < bx.length; i++) {
+                by[i] -= 3;
+                ctx.fillStyle = "white"
+                ctx.beginPath();
+                ctx.rect(bx[i]-2.5,by[i]-2.5,5,5)
+                ctx.fill();
+            }
+           
+        };
+              
+        function step() {
+              
+            controls();
+     	
+            ctx.clearRect(0,0,c.width,c.height);
+     	  
+            ctx.fillStyle = "black"
+            ctx.beginPath();
+            ctx.rect(0,0,c.width,c.height)
+            ctx.fill();
+            
+            var img = document.getElementById("boi"); 
+            
+            for (var i = 0; i < idx.length;i++) {
+                ctx.closePath();
+                ctx.drawImage(img, idx[i]-25, idy[i]+PosY,50,60);
+            }
+            
+            var img2 = document.getElementById("boom");
+            ctx.drawImage(img2, 250-50+tankX, 300, 100, 60);
+            
+            PosY += ((500/100)*5)/60;
+            
+            drawBullets();
+            
+            
+            requestAnimationFrame(step);
+        }
+        
+        createInvaders(4,0);
+        createInvaders(3,1);
+        createInvaders(4,2);
+        createInvaders(3,3);
+        createInvaders(4,4);
+        createInvaders(3,5);
+        requestAnimationFrame(step);
+      
     </script>
   </body>
 </html>

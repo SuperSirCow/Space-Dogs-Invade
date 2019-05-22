@@ -77,6 +77,17 @@
             for (var i = 0; i < idx.length;i++) {
                 ctx.closePath();
                 ctx.drawImage(img, idx[i]-25, idy[i]+PosY,50,60);
+                for (var w = 0;w < bx.length;w++) {
+                    if (by[w] < idy[i]+PosY+60 && by[w] > idy[i]) {
+                        if (bx[w] > idx[i]-25 && bx[w] < idx[i]+25) {
+                            // reeeeee
+                            idx.splice(i,1);
+                            idy.splice(i,1);
+                            i -= 1;
+                            break;
+                        }
+                    }
+                }
             }
             
             var img2 = document.getElementById("boom");
@@ -85,7 +96,6 @@
             PosY += ((500/100)*5)/60;
             
             drawBullets();
-            
             
             requestAnimationFrame(step);
         }
